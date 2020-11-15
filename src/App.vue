@@ -1,9 +1,42 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div class="wrapper">
+      <Claim/>
+      <SearchInput/>
   </div>
 </template>
 
+<script>
+import axios from 'axios';
+import debounce from 'lodash.debounce';
+import Claim from './components/Claim';
+import SearchInput from './components/SearchInput';
+
+const API  = 'https://images-api.nasa.gov/';
+
+export default {
+    name : 'App',
+    components: {
+        Claim,SearchInput
+    },
+    data(){
+        return {
+            searchValue : '',
+            results : [],
+        }
+    },
+    methods: {
+        handleInput: debounce( function(){
+            axios.get(`${API}search?q=${this.searchValue}&media_type=image`)
+            .then((response) => {
+                this.results = response.data.collection.items;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }, 500),
+    }
+};
+</script>
 <style lang="scss" >
 
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
@@ -12,10 +45,26 @@
     box-sizing : border-box;
     margin: 0;
     padding: 0 ;
-    
+
   }
 
   body{
     font-family: 'Montserrat', sans-serif;
   }
+
+  .wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items : center;
+    justify-content: center;
+    margin: 0;
+    padding: 30px;
+    width: 100vw;
+    height:100vh;
+    background-image: url(./assets/background-cosmos.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 90% 0%;
+
+    }
 </style>
