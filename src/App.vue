@@ -1,14 +1,22 @@
 <template>
   <div :class="[{ flexStart : step === 1 } , 'wrapper']">
     <transition name="slide">
-        <p class="logo" v-if="step === 1"> SPACER </p>
-      </transition>
-      <transition name="fade">
-        <HeroImage v-if="step === 0"/>
-      </transition>
-      <Claim v-if="step === 0"/>
-      <SearchInput v-model="searchValue" @input="handleInput"
-      :dark="step === 1" />
+      <p class="logo" v-if="step === 1"> SPACER </p>
+    </transition>
+    <transition name="fade">
+      <HeroImage v-if="step === 0"/>
+    </transition>
+    <Claim v-if="step === 0"/>
+    <SearchInput v-model="searchValue" @input="handleInput"
+    :dark="step === 1" />
+    <div class="imageReults" v-for="item in results" :key="item.data.nasa_id">
+      <ul>
+        <li>
+          {{ item.links[0].href}}
+        </li>
+      </ul>
+    </div>
+
   </div>
 </template>
 
