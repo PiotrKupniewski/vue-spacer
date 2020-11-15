@@ -2,6 +2,7 @@
     <input 
         id="search" 
         name="search" 
+        :class="{ dark }"
         :value="value"
         @input="handleInputChange"
     />
@@ -13,7 +14,11 @@ export default {
     props: {
         value : {
             type: String, 
-            required: true
+            required: true,
+        }, 
+        dark: {
+            type: Boolean,
+            default: false,
         }
     }, 
     methods: {
@@ -43,5 +48,15 @@ export default {
     input:focus{
         outline: none;
         box-shadow : 0px 10px 30px -15px rgba(255, 255, 255, 0.3);
+    }
+
+    .dark{
+        color : #1e3d4a;
+        border-bottom-color : #1e3d4a;
+    }
+
+    .dark:focus{
+        outline: none;
+        box-shadow : 0px 10px 30px -15px rgba(#1e3d4a, 0.3);
     }
 </style>

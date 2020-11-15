@@ -1,8 +1,14 @@
 <template>
-  <div class="wrapper">
-      <HeroImage/>
-      <Claim/>
-      <SearchInput v-model="searchValue" @input="handleInput()"/>
+  <div :class="[{ flexStart : step === 1 } , 'wrapper']">
+    <transition name="slide">
+        <p class="logo" v-if="step === 1"> SPACER </p>
+      </transition>
+      <transition name="fade">
+        <HeroImage v-if="step === 0"/>
+      </transition>
+      <Claim v-if="step === 0"/>
+      <SearchInput v-model="searchValue" @input="handleInput"
+      :dark="step === 1" />
   </div>
 </template>
 
@@ -22,20 +28,26 @@ export default {
     },
     data(){
         return {
-            searchValue : '',
-            results : [],
+          loading :false, 
+          step : 0,
+          searchValue : '',
+          results : [],
         }
     },
     methods: {
         handleInput: debounce( function(){
-            axios.get(`${API}search?q=${this.searchValue}&media_type=image`)
-            .then((response) => {
-                this.results = response.data.collection.items;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        }, 500),
+          this.loading = true;
+          this.step = 1;
+          axios.get(`${API}search?q=${this.searchValue}&media_type=image`)
+          .then((response) => {
+              this.results = response.data.collection.items;
+              this.loading = false;
+              this.step = 1;
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+      }, 500),
     }
 };
 </script>
@@ -55,9 +67,26 @@ export default {
   body{
     font-family: 'Montserrat', sans-serif;
   }
+  
+  .fade-enter-active, .fade-leave-active{
+    transition: opacity .3 ease;
+  }
+
+  .fade-enter, .fade-leave-to{
+    opacity:0;
+  }
+
+  .slide-enter-active, .slide-leave-active{
+    transition: margin-top .3 ease;
+  }
+
+  .slide-enter, .slide-leave-to{
+    margin-top: 30px;
+  }
 
   .wrapper{
     min-height: 100vh;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items : center;
@@ -66,7 +95,16 @@ export default {
     padding: 30px;
     width: 100vw;
     height:100vh;
-    
 
+    &.flexStart{
+      justify-content:flex-start;
     }
+  }
+
+  .logo{
+    position: absolute;
+    top:60px;
+    color: black;
+    font-size:25px;
+  }
 </style>
