@@ -29,11 +29,11 @@
 <script>
 import axios from 'axios';
 import debounce from 'lodash.debounce';
-import Claim from './components/Claim';
-import SearchInput from './components/SearchInput';
-import HeroImage from './components/HeroImage';
-import Item from './components/Item';
-import Modal from './components/Modal';
+import Claim from './components/Claim.vue';
+import SearchInput from './components/SearchInput.vue';
+import HeroImage from './components/HeroImage.vue';
+import Item from './components/Item.vue';
+import Modal from './components/Modal.vue';
 
 const API  = 'https://images-api.nasa.gov/';
 
@@ -145,10 +145,10 @@ export default {
 
 
   .loader {
-  margin-top: 100px;
-  display: inline-block;
-  width: 80px;
-  height: 80px;
+    margin-top: 100px;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
   }
 
 .loader:after {
