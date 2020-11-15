@@ -9,14 +9,9 @@
     <Claim v-if="step === 0"/>
     <SearchInput v-model="searchValue" @input="handleInput"
     :dark="step === 1" />
-    <div class="imageReults" v-for="item in results" :key="item.data.nasa_id">
-      <ul>
-        <li>
-          {{ item.links[0].href}}
-        </li>
-      </ul>
+    <div class="imageResults" v-if="results && !loading && step ==1">
+      <Item v-for="item in results" :item="item" :key="item.data[0].nasa_id"/>
     </div>
-
   </div>
 </template>
 
@@ -26,13 +21,14 @@ import debounce from 'lodash.debounce';
 import Claim from './components/Claim';
 import SearchInput from './components/SearchInput';
 import HeroImage from './components/HeroImage';
+import Item from './components/Item';
 
 const API  = 'https://images-api.nasa.gov/';
 
 export default {
     name : 'App',
     components: {
-        Claim,SearchInput,HeroImage
+        Claim,SearchInput,HeroImage,Item
     },
     data(){
         return {
@@ -107,6 +103,19 @@ export default {
     &.flexStart{
       justify-content:flex-start;
     }
+  }
+
+  .imageResults{
+    margin-top: 50px;
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap : 20px;
+
+    @media(min-width: 768px){
+      grid-template-columns: repeat(3, 1fr);
+    }
+
   }
 
   .logo{
