@@ -51,7 +51,7 @@ export default {
         background-image: url(../assets/background-cosmos.jpg);
         background-repeat: no-repeat;
         background-size: cover;
-        background-position: 30% 0%;
+        background-position: 90% 0%;
 
     }
 </style>
