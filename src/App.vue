@@ -10,8 +10,19 @@
     <SearchInput v-model="searchValue" @input="handleInput"
     :dark="step === 1" />
     <div class="imageResults" v-if="results && !loading && step ==1">
-      <Item v-for="item in results" :item="item" :key="item.data[0].nasa_id"/>
+      <Item v-for="item in results" 
+      :item="item" 
+      :key="item.data[0].nasa_id"
+      @click.native="openModal(item)"
+      />
     </div>
+    <div class="loader" v-if="step === 1 && loading">
+
+    </div>
+    <Modal 
+    v-if="modalOpen" 
+    @close-modal="modalOpen = false"
+    :item="modalItem" />
   </div>
 </template>
 
@@ -22,16 +33,19 @@ import Claim from './components/Claim';
 import SearchInput from './components/SearchInput';
 import HeroImage from './components/HeroImage';
 import Item from './components/Item';
+import Modal from './components/Modal';
 
 const API  = 'https://images-api.nasa.gov/';
 
 export default {
     name : 'App',
     components: {
-        Claim,SearchInput,HeroImage,Item
+        Claim,SearchInput,HeroImage,Item,Modal
     },
     data(){
         return {
+          modalOpen : false,
+          modalItem: null,
           loading :false, 
           step : 0,
           searchValue : '',
@@ -52,6 +66,10 @@ export default {
               console.log(error);
           });
       }, 500),
+      openModal: function(item){
+        this.modalItem = item;
+        this.modalOpen = true;
+      },
     }
 };
 </script>
@@ -124,4 +142,33 @@ export default {
     color: black;
     font-size:25px;
   }
+
+
+  .loader {
+  margin-top: 100px;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  }
+
+.loader:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #1e3d4a;
+  border-color: #1e3d4a transparent #1e3d4a transparent;
+  animation: loading 1.2s linear infinite;
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 </style>
