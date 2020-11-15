@@ -25,19 +25,19 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        color: #fff;
     }
 
     .claim{
         font-size: 140px;
         font-weight: 700;;
         margin: 0;
-        color: #fff;
+        
     }
     
     .subclaim{
         margin: 25px 0 0 0;
         font-size: 30px;
-        color: #ffd
     }
 
 
