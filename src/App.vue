@@ -2,7 +2,7 @@
   <div class="wrapper">
       <HeroImage/>
       <Claim/>
-      <SearchInput/>
+      <SearchInput v-model="searchValue" @input="handleInput()"/>
   </div>
 </template>
 
@@ -47,7 +47,9 @@ export default {
     box-sizing : border-box;
     margin: 0;
     padding: 0 ;
-
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body{

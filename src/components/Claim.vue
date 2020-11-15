@@ -32,12 +32,24 @@ export default {
         font-size: 140px;
         font-weight: 700;;
         margin: 0;
-        
+
+        @media(min-wdith: 768px){
+            font-size : 200px;
+        }   
     }
     
     .subclaim{
         margin: 25px 0 0 0;
-        font-size: 30px;
+        font-size: 40px;
+        font-weight: 300;
+     
+
+        @media(min-wdith: 768px){
+            font-size : 60px;
+            line-height: 1;
+            width: 700px;
+            letter-spacing : 2px;
+        } 
     }
 
 
