@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+      <Claim/>
       <div class="search">
           <label for="search">Search</label>
         <input 
@@ -20,10 +21,14 @@
 <script>
 import axios from 'axios';
 import debounce from 'lodash.debounce';
+import Claim from '../components/Claim';
 const API  = 'https://images-api.nasa.gov/';
 
 export default {
     name : 'Search',
+    components: {
+        Claim,
+    },
     data(){
         return {
             searchValue : '',
